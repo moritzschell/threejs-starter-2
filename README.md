@@ -176,7 +176,9 @@ Die Auto-Rotation (`model.rotation.y += 0.01`) wird entfernt. Stattdessen lausch
 ```javascript
 // Scroll-Event: Rotation des Modells an scrollY koppeln
 window.addEventListener('scroll', () => {
+  if (model != null) {
     model.rotation.y = window.scrollY * 0.005;
+  }
 });
 ```
 
