@@ -34,7 +34,7 @@ Da das `<script>` den Canvas erzeugt und **danach** im HTML steht, liegt der Can
 
   <!-- Überschrift liegt hinter dem 3D-Canvas -->
   <div id="headline-container">
-    <h1>Funky Slider</h1>
+    <h1>Funky Fader</h1>
   </div>
 
   <!-- Three.js erzeugt hier den Canvas darüber -->
@@ -224,7 +224,7 @@ Statt eines einzigen langen `<div>` strukturieren wir den Inhalt jetzt in vier `
 <div id="scroll-container">
 
   <section id="section-0">
-    <h1>Funky Slider</h1>
+    <h1>Funky Fader</h1>
     <button class="scroll-btn" data-target="section-1">Next</button>
   </section>
 
