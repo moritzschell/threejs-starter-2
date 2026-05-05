@@ -186,7 +186,7 @@ Der Faktor `0.005` bestimmt, wie schnell sich das Objekt pro Scroll-Pixel dreht.
 
 ### Experiment
 
-- Ändere die Rotationsgschwindigkeit
+- Ändere die Rotationsgeschwindigkeit
 - Ändere die Rotations-Achsen
 - Wie könnte die Rotation gemapped werden, zB. auf eine vorgegebene Rotation von 0 – 360 Grad?
 
@@ -451,7 +451,7 @@ In diesem Schritt laden wir ein GLB-Modell, das eine eingebettete Keyframe-Anima
 
 ### Schritt 1 – Model Keyframe Animation hinzufügen
 
-1. Öffne Bkedner und importiere das *Fader.glb* File
+1. Öffne Blender und importiere das *Fader.glb* File
 2. Im Edit Mode – Selektiere das Objekt und separiere das bewegliche Element vom Gehäuse. 
     - `Mesh > Separate > Selection` 
     - oder Shortcut `P`: Separate by `Selection` oder `By Material`
@@ -469,7 +469,7 @@ In diesem Schritt laden wir ein GLB-Modell, das eine eingebettete Keyframe-Anima
 
 Es werden 3 Variablen vorbereitet:
 
-Three.js spielt Keyframe-Animationen über einen `AnimationMixer` ab. Wir brauchen außerdem eine `Clock`, die misst, wie viel Zeit zwischen zwei Frames vergangen ist – Der Mixer nutzt diese Zeitdifferenz, um die Animation zu abzuspielen.
+Three.js spielt Keyframe-Animationen über einen `AnimationMixer` ab. Wir brauchen außerdem eine `Clock`, die misst, wie viel Zeit zwischen zwei Frames vergangen ist – Der Mixer nutzt diese Zeitdifferenz, um die Animation abzuspielen.
 
 `action` nutzen wir, um später per Button die Animation auslösen zu können.
 
