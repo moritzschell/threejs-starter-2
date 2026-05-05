@@ -439,7 +439,131 @@ Die Klassen `.align-left` und `.align-right` steuern, wo der Inhalt innerhalb de
 - Ersetze die Platzhalter-Texte durch eigene Inhalte
 - Ändere `font-size` bei `h2`
 - Ändere `max-width` beim `<p>` – was passiert bei `20ch` oder `60ch`?
-- Aändere die Anordung der Inhalte in den Sections – z.B. auf `align-right` / `align-left` / `align-right`
+- Ändere die Anordnung der Inhalte in den Sections – z.B. auf `align-right` / `align-left` / `align-right`
+
+---
+
+## 05 – Keyframe-Animation abspielen
+
+In diesem Schritt laden wir ein GLB-Modell, das eine eingebettete Keyframe-Animation enthält. Ein Button in der letzten Section spielt die Animation einmalig ab.
+
+---
+
+### Schritt 1 – Model Keyframe Animation hinzufügen
+
+1. Öffne Bkedner und importiere das *Fader.glb* File
+2. Im Edit Mode – Selektiere das Objekt und separiere das bewegliche Element vom Gehäuse. 
+    - `Mesh > Separate > Selection` 
+    - oder Shortcut `P`: Separate by `Selection` oder `By Material`
+3. Im Object Mode: Wähle das bewegliche *Fader-Handle* Element und füge eine Keyframe-Animation hinzu.
+    - drücke `I` oder `Object > Animation > Insert Keyframe`
+    - Im Timeline Fenster bewege den Zeit-Cursor (zB zu Frame 40)
+    - Bewege das Objekt (Shortcut `G`) drücke `I` um einen weiteren Keyframe hinzuzufügen. 
+    - Wiederhole die Schritte um einen Animations-Loop zu erstellen
+4. Exportiere das Objekt als glb mit Animation inkludiert, zB. als *Fader-animation*
+5. Füge das neu exportierte Objekt dem *models* Ordner hinzu
+
+---
+
+### Schritt 2 – AnimationMixer einrichten in `main.js`
+
+Es werden 3 Variablen vorbereitet:
+
+Three.js spielt Keyframe-Animationen über einen `AnimationMixer` ab. Wir brauchen außerdem eine `Clock`, die misst, wie viel Zeit zwischen zwei Frames vergangen ist – Der Mixer nutzt diese Zeitdifferenz, um die Animation zu abzuspielen.
+
+`action` nutzen wir, um später per Button die Animation auslösen zu können.
+
+```javascript
+let mixer;   // AnimationMixer — steuert die Keyframe-Animation
+let action;  // die vorbereitete Animation, bereit zum Abspielen
+const clock = new THREE.Clock(); // misst die Zeit zwischen den Frames
+```
+
+Im Loader: lade das neue Model
+
+```javascript
+'./models/Fader-animation.glb'
+```
+
+Im Loader, nachdem das Modell geladen wurde:
+
+```javascript
+mixer = new THREE.AnimationMixer(model);
+action = mixer.clipAction(gltf.animations[0]); // erste Animation im GLB
+action.setLoop(THREE.LoopOnce, 1);  // nur einmal abspielen
+action.clampWhenFinished = true;    // am letzten Frame einfrieren
+```
+
+---
+
+### Schritt 3 – Mixer im Animations-Loop aktualisieren
+
+Der Mixer bewegt die Animation nur, wenn er in jedem Frame mit der vergangenen Zeit aktualisiert wird. `clock.getDelta()` gibt die Sekunden seit dem letzten Frame zurück:
+
+```javascript
+function animate() {
+    requestAnimationFrame(animate);
+
+    if (mixer) {
+        mixer.update(clock.getDelta());
+    }
+
+    renderer.render(scene, camera);
+}
+```
+
+---
+
+### Schritt 4 – Play-Button in `index.html` und `main.js`
+
+Füge im `text-block`-Div der letzten Section, direkt unter dem Absatz einen Button hinzu:
+
+```html
+<section id="section-3" class="align-left">
+  <div class="text-block">
+    <h2>Sub-Headline Drei</h2>
+    <p>Hier steht ein kurzer Platzhalter-Text.</p>
+    <button id="play-btn">Play Animation</button>
+  </div>
+  <button class="scroll-btn" data-target="section-0">Back to start</button>
+</section>
+```
+
+In `main.js` hören wir auf den Klick und spielen die Animation ab. `action.reset()` spult dabei immer zurück an den Anfang, damit der Button mehrfach verwendet werden kann:
+
+```javascript
+document.getElementById('play-btn').addEventListener('click', function () {
+    if (!action) return; // Modell noch nicht geladen
+    action.reset();
+    action.play();
+});
+```
+
+---
+
+### Schritt 5 – Button stylen in `style.css`
+
+Der Play-Button sitzt inline im Text-Block und bekommt denselben Look wie die Scroll-Buttons, aber ohne `position: absolute`:
+
+```css
+#play-btn {
+    margin-top: 1.5rem;
+    background: none;
+    border: 2px solid white;
+    color: white;
+    font-size: 1rem;
+    padding: 0.5rem 1.2rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+```
+
+---
+
+### Experiment
+
+- Füge eine zweite Rotation um die x-Achse hinzu, sodass der Fader am Ende aufrecht steht und die Animation dadurch besser sichtbar wird
+- Ersetze `LoopOnce, 1` durch `LoopRepeat` – was passiert?
 
 ---
 
