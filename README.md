@@ -188,7 +188,6 @@ Der Faktor `0.005` bestimmt, wie schnell sich das Objekt pro Scroll-Pixel dreht.
 
 - Ändere die Rotationsgeschwindigkeit
 - Ändere die Rotations-Achsen
-- Wie könnte die Rotation gemapped werden, zB. auf eine vorgegebene Rotation von 0 – 360 Grad?
 
 ---
 
@@ -198,25 +197,7 @@ In diesem Schritt strukturieren wir die Seite in einzelne Abschnitte (Sections) 
 
 ---
 
-### Schritt 1 – Rotation auf 0–360° mappen in `main.js`
-
-Bisher wurde `scrollY` direkt mit einem fixen Faktor multipliziert: Je nach Seitenlänge dreht sich das Objekt unterschiedlich weit.
-
-Jetzt: Wir berechnen die **relative** Scrollposition im Verhältnis zur gesamten Länge des Scrollbereichs – als Wert zwischen 0 und 1 (`progress`). Dann multiplizieren wir mit `Math.PI * 2` (= 360°). Damit dreht sich das Objekt genau einmal, unabhängig von der Länge des Scrollbereichs.
-
-```javascript
-window.addEventListener('scroll', () => {
-    const maxScroll = document.body.scrollHeight - window.innerHeight; // gesamter Scroll-Bereich
-    const progress = window.scrollY / maxScroll; // 0 = oben, 1 = unten
-    model.rotation.y = progress * Math.PI * 2;   // 0° → 360°
-});
-```
-
-> `Math.PI * 2` entspricht einer vollen Umdrehung. `Math.PI` wäre eine halbe (180°).
-
----
-
-### Schritt 2 – Sections in `index.html`
+### Schritt 1 – Sections in `index.html`
 
 Statt eines einzigen langen `<div>` strukturieren wir den Inhalt jetzt in vier `<section>`-Elemente. Jede Section soll eine Bildschirmhöhe hoch sein. Jeder Button trägt im `data-target`-Attribut die ID der nächsten Section.
 
@@ -246,7 +227,7 @@ Das `data-target`-Attribut ist ein eigenes Daten-Attribut, an dem wir uns selbst
 
 ---
 
-### Schritt 3 – Sections und Button in `style.css`
+### Schritt 2 – Sections und Button in `style.css`
 
 Jede Section bekommt `height: 100vh` – damit ist sie genau so hoch wie der Bildschirm. `box-sizing: border-box` stellt sicher, dass Innenabstand (`padding`) nicht zur Höhe addiert wird.
 
@@ -293,6 +274,27 @@ canvas {
     pointer-events: none;
 }
 ```
+
+---
+
+### Schritt 3 – Rotation auf 0–360° mappen in `main.js`
+
+Bisher wurde `scrollY` direkt mit einem fixen Faktor multipliziert: Je nach Seitenlänge dreht sich das Objekt unterschiedlich weit.
+
+Jetzt: wir berechnen die **relative** Scrollposition als Wert zwischen 0 und 1 (`progress`) und multiplizieren mit `Math.PI * 2` (= 360°). Damit dreht sich das Objekt genau einmal über die gesamte Seite.
+
+Ersetze den bisherigen `scroll`-EventListener durch diesen:
+
+```javascript
+window.addEventListener('scroll', () => {
+    const maxScroll = document.body.scrollHeight - window.innerHeight; // gesamter Scroll-Bereich
+    if (maxScroll === 0) return; // Seite hat keine Scroll-Höhe → abbrechen
+    const progress = window.scrollY / maxScroll; // 0 = oben, 1 = unten
+    model.rotation.y = progress * Math.PI * 2;   // 0° → 360°
+});
+```
+
+> `Math.PI * 2` entspricht einer vollen Umdrehung. `Math.PI` wäre eine halbe (180°).
 
 ---
 
