@@ -347,8 +347,99 @@ scrollButtons.forEach(function(button) {
 ### Experiment
 
 - Ändere die Scrollgeschwindigkeit
-- Experimentiere mit der maximalen Scroll-Rotation (1/2 Umdrehung, 2 Umdrehungen, etc) 
-- Füge einen Button hinzu, der zurück zur ersten Section scrollt.
+- Experimentiere mit der maximalen Scroll-Rotation (1/2 Umdrehung, 2 Umdrehungen, etc)
+- Füge am Ende einen Button hinzu, der zurück zur ersten Section scrollt.
+
+---
+
+## 04 – Sub-Headlines und Texte
+
+In diesem Schritt füllen wir die drei Content-Sections mit Inhalt: eine Sub-Headline und ein kurzer Absatz. Die Blöcke wechseln sich ab – links, rechts, links – damit der Text abwechslungsreich neben dem 3D-Objekt liegt.
+
+---
+
+### Schritt 1 – Inhalt in `index.html`
+
+Jede Section bekommt einen `<div class="text-block">` mit einer `<h2>` und einem `<p>`. Der Div hält Headline und Text zusammen, damit sie beim Ausrichten als eine Einheit behandelt werden.
+
+Zusätzlich bekommt jede Section eine Ausrichtungs-Klasse: `align-left` oder `align-right`.
+
+```html
+<section id="section-1" class="align-left">
+  <div class="text-block">
+    <h2>Sub-Headline Eins</h2>
+    <p>Hier steht ein kurzer Platzhalter-Text. Füge deinen eigenen Inhalt hier ein.</p>
+  </div>
+  <button class="scroll-btn" data-target="section-2">Next</button>
+</section>
+
+<section id="section-2" class="align-right">
+  <div class="text-block">
+    <h2>Sub-Headline Zwei</h2>
+    <p>Hier steht ein kurzer Platzhalter-Text. Füge deinen eigenen Inhalt hier ein.</p>
+  </div>
+  <button class="scroll-btn" data-target="section-3">Next</button>
+</section>
+
+<section id="section-3" class="align-left">
+  <div class="text-block">
+    <h2>Sub-Headline Drei</h2>
+    <p>Hier steht ein kurzer Platzhalter-Text. Füge deinen eigenen Inhalt hier ein.</p>
+  </div>
+  <button class="scroll-btn" data-target="section-0">Back to start</button>
+</section>
+```
+
+---
+
+### Schritt 2 – Ausrichtung und Typografie in `style.css`
+
+`h2` und `p` bekommen Farbe, Größe und Schriftart. Der `<p>` bekommt `max-width: 40ch` – das begrenzt die Zeilenlänge auf etwa 40 Zeichen und macht den Text besser lesbar.
+
+```css
+h2 {
+    color: white;
+    font-size: 4vw;
+    font-family: sans-serif;
+    margin: 0 0 1rem 0;
+}
+
+p {
+    color: white;
+    font-size: 1.2rem;
+    font-family: sans-serif;
+    max-width: 40ch;
+    margin: 0;
+    line-height: 1.6;
+}
+```
+
+Die Klassen `.align-left` und `.align-right` steuern, wo der Inhalt innerhalb der Section landet. `justify-content: flex-start` schiebt alles nach oben, `padding-top` gibt Abstand vom oberen Rand.
+
+```css
+.align-left {
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-top: 15vh;
+    padding-left: 8vw;
+}
+
+.align-right {
+    justify-content: flex-start;
+    align-items: flex-end;
+    padding-top: 15vh;
+    padding-right: 8vw;
+}
+```
+
+---
+
+### Experiment
+
+- Ersetze die Platzhalter-Texte durch eigene Inhalte
+- Ändere `font-size` bei `h2`
+- Ändere `max-width` beim `<p>` – was passiert bei `20ch` oder `60ch`?
+- Aändere die Anordung der Inhalte in den Sections – z.B. auf `align-right` / `align-left` / `align-right`
 
 ---
 
