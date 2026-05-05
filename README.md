@@ -566,6 +566,8 @@ Der Play-Button sitzt inline im Text-Block und bekommt denselben Look wie die Sc
 
 - Füge eine zweite Rotation um die x-Achse hinzu, sodass der Fader am Ende aufrecht steht und die Animation dadurch besser sichtbar wird
 - Ersetze `LoopOnce, 1` durch `LoopRepeat` – was passiert?
+- Experimentiere mit deiner eigenen Gestaltung, passe Hintergrundfarbe und Schriftgrößen an
+- Lade einen neuen Font-Style (zB über [Google Fonts](https://fonts.google.com))
 
 ---
 
