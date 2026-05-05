@@ -487,7 +487,7 @@ Im Loader: lade das neue Model
 './models/Fader-animation.glb'
 ```
 
-Im Loader, nachdem das Modell geladen wurde:
+Im Loader, nachdem das Modell geladen wurde (direkt nach der Zeile: `scene.add(model);`):
 
 ```javascript
 mixer = new THREE.AnimationMixer(model);
